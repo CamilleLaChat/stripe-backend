@@ -58,7 +58,7 @@ export default async function handler(req, res) {
         price_data: {
           currency: 'eur',
           product_data: {
-            name: 'Starter Pack - Prix public 80 €',
+            name: `Starter Pack de ${prenom} ${nom}`,
           },
           unit_amount: finalPrice,
         },
