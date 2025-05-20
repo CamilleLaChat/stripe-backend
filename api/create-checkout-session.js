@@ -4,7 +4,6 @@ import { getFirestore, collection, getDocs, query, where, doc, increment, update
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
 
-// Initialiser Firebase Admin SDK (si pas déjà initialisé)
 const firebaseConfig = {
   apiKey: process.env.FIREBASE_API_KEY,
   authDomain: process.env.FIREBASE_AUTH_DOMAIN,
@@ -27,28 +26,31 @@ export default async function handler(req, res) {
   let discountAmount = 0;
   let affiliateEmail = null;
 
-  // Cherche si un code promo valide est enregistré en base
-  if (codePromo) {
-    const promoQuery = query(collection(db, 'codesPromo'), where('code', '==', codePromo.toUpperCase()));
-    const snapshot = await getDocs(promoQuery);
-    if (!snapshot.empty) {
-      const promoDoc = snapshot.docs[0];
-      const promoData = promoDoc.data();
-      affiliateEmail = promoData.email;
-      discountAmount = 1000; // 10€ de réduction
-
-      // Incrément optionnel : statistiques d'usage du code
-      await updateDoc(doc(db, 'codesPromo', promoDoc.id), {
-        ventes: increment(1),
-        gains: increment(10)
-      });
-    }
-  }
-
-  const basePrice = 8000; // 80€
-  const finalPrice = basePrice - discountAmount;
-
   try {
+    // Vérifie si un code promo a été fourni et n'est pas vide
+    if (codePromo && codePromo.trim() !== '') {
+      const promoQuery = query(
+        collection(db, 'codesPromo'),
+        where('code', '==', codePromo.toUpperCase())
+      );
+      const snapshot = await getDocs(promoQuery);
+
+      if (!snapshot.empty) {
+        const promoDoc = snapshot.docs[0];
+        const promoData = promoDoc.data();
+        affiliateEmail = promoData.email;
+        discountAmount = 1000; // 10€ de réduction
+
+        await updateDoc(doc(db, 'codesPromo', promoDoc.id), {
+          ventes: increment(1),
+          gains: increment(10)
+        });
+      }
+    }
+
+    const basePrice = 8000; // Prix en centimes : 80 €
+    const finalPrice = basePrice - discountAmount;
+
     const session = await stripe.checkout.sessions.create({
       payment_method_types: ['card'],
       mode: 'payment',
