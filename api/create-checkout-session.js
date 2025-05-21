@@ -1,13 +1,13 @@
 import Stripe from 'stripe';
 import { initializeApp } from 'firebase/app';
-import { getFirestore, collection, getDocs, query, where, doc, increment, updateDoc } from 'firebase/firestore';
+import { getFirestore, collection, getDocs, query, where } from 'firebase/firestore';
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
 
 const firebaseConfig = {
   apiKey: process.env.FIREBASE_API_KEY,
   authDomain: process.env.FIREBASE_AUTH_DOMAIN,
-  projectId: process.env.FIREBASE_PROJECT_ID,
+  projectId: process.env.FIREBASE_PROJECT_ID
 };
 
 const app = initializeApp(firebaseConfig);
@@ -27,7 +27,6 @@ export default async function handler(req, res) {
   let affiliateEmail = null;
 
   try {
-    // Vérifie si un code promo a été fourni et n'est pas vide
     if (codePromo && codePromo.trim() !== '') {
       const promoQuery = query(
         collection(db, 'codesPromo'),
@@ -36,15 +35,9 @@ export default async function handler(req, res) {
       const snapshot = await getDocs(promoQuery);
 
       if (!snapshot.empty) {
-        const promoDoc = snapshot.docs[0];
-        const promoData = promoDoc.data();
+        const promoData = snapshot.docs[0].data();
         affiliateEmail = promoData.email;
         discountAmount = 1000; // 10€ de réduction
-
-        await updateDoc(doc(db, 'codesPromo', promoDoc.id), {
-          ventes: increment(1),
-          gains: increment(10)
-        });
       }
     }
 
