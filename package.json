@@ -4,6 +4,7 @@
   "type": "module",
   "dependencies": {
     "stripe": "^12.16.0",
-    "firebase": "^10.7.0"
+    "firebase": "^10.7.0",
+    "micro": "^9.3.4"
   }
 }
