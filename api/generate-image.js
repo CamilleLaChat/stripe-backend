@@ -1,4 +1,11 @@
 export default async function handler(req, res) {
+  res.setHeader('Access-Control-Allow-Origin', 'http://localhost:5173');
+  res.setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS');
+  res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
+
+  if (req.method === 'OPTIONS') {
+    return res.status(200).end();
+  }
   if (req.method !== 'POST') return res.status(405).end('Method not allowed');
 
   const { nom, metier, accessoire1, accessoire2, extra } = req.body;
