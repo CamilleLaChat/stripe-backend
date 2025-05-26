@@ -8,9 +8,17 @@ export default async function handler(req, res) {
   }
   if (req.method !== 'POST') return res.status(405).end('Method not allowed');
 
-  const { nom, metier, accessoire1, accessoire2, extra } = req.body;
+  const { prenom, metier, accessoire1, accessoire2, extra } = req.body;
 
-  const prompt = `Packaging de figurine Starter Pack. Personnage : ${nom}, ${metier}, avec ${accessoire1} et ${accessoire2}. Style cartoon, dynamique, avec ${extra || 'des couleurs modernes et un fond neutre'}.`;
+  const extraDetails = extra?.trim() ? `Caractéristiques physiques : ${extra}.` : '';
+
+  const prompt = `
+  Ultra-realistic photo of a Starter Pack action figure of a person named ${prenom}, whose profession is ${metier}.
+  Figure includes two accessories: ${accessoire1} and ${accessoire2}.
+  The character is packaged inside a plastic blister toy box, with a cardboard label reading "${prenom.toUpperCase()} - ${metier.toUpperCase()} Starter Pack".
+  ${extraDetails}
+  Inspired by the recent social media trend of customized starter pack action figures. High quality studio lighting, clear focus, soft shadows.
+  `.trim();
 
   try {
     const openaiRes = await fetch('https://api.openai.com/v1/images/generations', {
