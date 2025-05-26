@@ -15,7 +15,7 @@ Design d'un blister "Starter Pack" professionnel. Vue de face. Le packaging est 
 La figurine représente une personne nommée "${prenom}", métier : ${metier}. Elle est accompagnée de deux accessoires à droite : ${accessoire1} et ${accessoire2}. 
 En haut à gauche du blister, une étiquette indique "4+", en haut à droite un badge bleu indique "ACTION FIGURE". 
 En haut au centre, un texte lisible en lettres majuscules "STARTER PACK". 
-En bas, écrit en noir : "${prenom.toUpperCase()} — ${metier.toUpperCase()}". 
+En bas, écrit en noir : "${prenom} — ${metier}". 
 Style photoréaliste ou 3D cartoon réaliste avec ombrages propres. 
 Pas de texte aléatoire. Emballage complet, proportions réalistes, pas de distorsion. ${extra || ''}
 `;
