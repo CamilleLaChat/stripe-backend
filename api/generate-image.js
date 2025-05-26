@@ -10,15 +10,9 @@ export default async function handler(req, res) {
 
   const { prenom, metier, accessoire1, accessoire2, extra } = req.body;
 
-  const extraDetails = extra?.trim() ? `Caractéristiques physiques : ${extra}.` : '';
-
-  const prompt = `
-  Ultra-realistic photo of a Starter Pack action figure of a person named ${prenom}, whose profession is ${metier}.
-  Figure includes two accessories: ${accessoire1} and ${accessoire2}.
-  The character is packaged inside a plastic blister toy box, with a cardboard label reading "${prenom} - ${metier} Starter Pack".
-  ${extraDetails}
-  Inspired by the recent social media trend of customized starter pack action figures. High quality studio lighting, clear focus, soft shadows.
-  `.trim();
+  const prompt = `Boîte de figurine Starter Pack en style jouet réaliste. Le personnage est ${prenom}, un(e) ${metier}. Il/elle est placé(e) dans un emballage plastique moulé vert, comme un jouet, avec son prénom "${prenom}" écrit en gros en bas à droite. 
+À droite de la figurine se trouvent deux accessoires visibles : ${accessoire1} et ${accessoire2}. 
+Le style est réaliste mais propre, bien éclairé, fond uni vert mat, étiquette "STARTER PACK" en haut, typographie claire. L’image est bien centrée et vue de face. ${extra || ''}`;
 
   try {
     const openaiRes = await fetch('https://api.openai.com/v1/images/generations', {
