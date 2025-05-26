@@ -10,11 +10,15 @@ export default async function handler(req, res) {
 
   const { prenom, metier, accessoire1, accessoire2, extra } = req.body;
 
-const prompt = `Photo réaliste d'une boîte de figurine type Starter Pack. Le packaging est vert, avec une typographie lisible "STARTER PACK" en haut. 
-À l’intérieur, une figurine de ${prenom}, un(e) ${metier}, en position debout, style cartoon réaliste, bien éclairée. 
-La boîte est en plastique moulé, avec deux accessoires visibles à droite : ${accessoire1} et ${accessoire2}. 
-Nom "${prenom}" écrit en bas à droite du blister. 
-Style propre, fond uni, style produit marketing photographié de face. ${extra || ''}`;
+const prompt = `
+Design d'un blister "Starter Pack" professionnel. Vue de face. Le packaging est vert, en plastique moulé avec une figurine au centre. 
+La figurine représente une personne nommée "${prenom}", métier : ${metier}. Elle est accompagnée de deux accessoires à droite : ${accessoire1} et ${accessoire2}. 
+En haut à gauche du blister, une étiquette indique "4+", en haut à droite un badge bleu indique "ACTION FIGURE". 
+En haut au centre, un texte lisible en lettres majuscules "STARTER PACK". 
+En bas, écrit en noir : "${prenom.toUpperCase()} — ${metier.toUpperCase()}". 
+Style photoréaliste ou 3D cartoon réaliste avec ombrages propres. 
+Pas de texte aléatoire. Emballage complet, proportions réalistes, pas de distorsion. ${extra || ''}
+`;
 
   try {
     const openaiRes = await fetch('https://api.openai.com/v1/images/generations', {
