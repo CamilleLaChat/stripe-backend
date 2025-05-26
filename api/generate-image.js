@@ -15,7 +15,7 @@ export default async function handler(req, res) {
   const prompt = `
   Ultra-realistic photo of a Starter Pack action figure of a person named ${prenom}, whose profession is ${metier}.
   Figure includes two accessories: ${accessoire1} and ${accessoire2}.
-  The character is packaged inside a plastic blister toy box, with a cardboard label reading "${prenom.toUpperCase()} - ${metier.toUpperCase()} Starter Pack".
+  The character is packaged inside a plastic blister toy box, with a cardboard label reading "${prenom} - ${metier} Starter Pack".
   ${extraDetails}
   Inspired by the recent social media trend of customized starter pack action figures. High quality studio lighting, clear focus, soft shadows.
   `.trim();
