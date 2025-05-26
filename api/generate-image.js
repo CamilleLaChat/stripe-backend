@@ -10,10 +10,11 @@ export default async function handler(req, res) {
 
   const { prenom, metier, accessoire1, accessoire2, extra } = req.body;
 
-  const prompt = `Boîte de figurine Starter Pack en style jouet réaliste. Le personnage est ${prenom}, un(e) ${metier}. Il/elle est placé(e) dans un emballage plastique moulé vert, comme un jouet, avec son prénom "${prenom}" écrit en gros en bas à droite. 
-À droite de la figurine se trouvent deux accessoires visibles : ${accessoire1} et ${accessoire2}. 
-Le style est réaliste mais propre, bien éclairé, fond uni vert mat, étiquette "STARTER PACK" en haut, typographie claire. L’image est bien centrée et vue de face. ${extra || ''}`;
-
+const prompt = `Photo réaliste d'une boîte de figurine type Starter Pack. Le packaging est vert, avec une typographie lisible "STARTER PACK" en haut. 
+À l’intérieur, une figurine de ${prenom}, un(e) ${metier}, en position debout, style cartoon réaliste, bien éclairée. 
+La boîte est en plastique moulé, avec deux accessoires visibles à droite : ${accessoire1} et ${accessoire2}. 
+Nom "${prenom}" écrit en bas à droite du blister. 
+Style propre, fond uni, style produit marketing photographié de face. ${extra || ''}`;
   try {
     const openaiRes = await fetch('https://api.openai.com/v1/images/generations', {
       method: 'POST',
