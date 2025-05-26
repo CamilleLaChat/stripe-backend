@@ -15,6 +15,7 @@ const prompt = `Photo réaliste d'une boîte de figurine type Starter Pack. Le p
 La boîte est en plastique moulé, avec deux accessoires visibles à droite : ${accessoire1} et ${accessoire2}. 
 Nom "${prenom}" écrit en bas à droite du blister. 
 Style propre, fond uni, style produit marketing photographié de face. ${extra || ''}`;
+
   try {
     const openaiRes = await fetch('https://api.openai.com/v1/images/generations', {
       method: 'POST',
