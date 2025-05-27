@@ -41,6 +41,18 @@ export default async function handler(req, res) {
     try {
       const session = event.data.object;
       const codePromo = session.metadata?.codePromo;
+      const userId = session.metadata?.userId;
+
+      // ✅ Marquer l'utilisateur comme payé
+      if (userId) {
+        const userRef = doc(db, 'utilisateurs', userId);
+        await updateDoc(userRef, {
+          paiementEffectue: true
+        });
+        console.log(`✅ Utilisateur ${userId} marqué comme payé`);
+      } else {
+        console.warn('⚠️ Aucun userId dans les metadata');
+      }
 
       if (codePromo && codePromo !== 'aucun') {
         const promoQuery = query(collection(db, 'codesPromo'), where('code', '==', codePromo));

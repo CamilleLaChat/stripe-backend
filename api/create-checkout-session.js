@@ -66,7 +66,8 @@ export default async function handler(req, res) {
         adresse,
         codePromo: codePromo || 'aucun',
         affiliateEmail: affiliateEmail || 'aucun',
-        commission: discountAmount ? '10' : '0'
+        commission: discountAmount ? '10' : '0',
+        userId
       }
     });
 
