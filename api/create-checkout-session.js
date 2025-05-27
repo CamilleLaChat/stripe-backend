@@ -21,7 +21,7 @@ export default async function handler(req, res) {
   if (req.method === 'OPTIONS') return res.status(200).end();
   if (req.method !== 'POST') return res.status(405).send('Method Not Allowed');
 
-  const { email, nom, prenom, adresse, codePromo } = req.body;
+  const { email, nom, prenom, adresse, codePromo, userId } = req.body;
 
   let discountAmount = 0;
   let affiliateEmail = null;
